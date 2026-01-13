@@ -1,5 +1,4 @@
 import asyncio
-import datetime
 import os
 from   telethon import TelegramClient
 
@@ -28,9 +27,9 @@ class Client:
     async def delete_my_messages(
         self,
         entity,
-        ts: datetime.datetime | None = None,
-        te: datetime.datetime | None = None,
-        batch_size: int = 100,
+        ts,
+        te,
+        batch_size = 100,
     ):
         found   = 0
         deleted = 0
@@ -73,8 +72,8 @@ class Client:
     async def select_messages(
         self,
         entity,
-        ts: datetime.datetime | None = None,
-        te: datetime.datetime | None = None,
+        ts,
+        te,
     ):
 
         records = []
@@ -103,9 +102,9 @@ class Client:
     async def select_photos(
         self,
         entity,
-        folder: str,
-        ts: datetime.datetime | None = None,
-        te: datetime.datetime | None = None,
+        folder,
+        ts,
+        te,
     ):
 
 
