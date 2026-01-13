@@ -8,7 +8,7 @@ import pandas
 from   client import Client
 
 def parse_utc(s: str) -> datetime.datetime:
-    dt = datetime.datetime.fromisoformat(s)
+    dt = datetime.strptime(s, "%Y-%m-%d")
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=datetime.timezone.utc)
     else:
