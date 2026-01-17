@@ -4,7 +4,7 @@ import datetime as dt
 import pandas   as pd
 import os
 import dotenv
-from   pathlib import Path
+from   pathlib            import Path
 from   azure.identity     import DefaultAzureCredential
 from   azure.storage.blob import BlobServiceClient
 
@@ -12,7 +12,7 @@ from client import Client
 
 
 
-UTC          = dt.timezone.utc
+UTC = dt.timezone.utc
 
 
 def parse_utc(value: str | None) -> dt.datetime | None:
