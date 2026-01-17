@@ -19,6 +19,14 @@ class Client:
     async def select_all_dialogs(self):
         dialogs = await self.client.get_dialogs()
         return dialogs
+    
+    async def select_dialog(self, chat_name: str):
+        dialogs = await self.select_all_dialogs()
+        for dialog in dialogs:
+            if dialog.name == chat_name:
+                return dialog.entity
+        raise RuntimeError(f"Chat not found: {chat_name}")
+
 
     async def select_all_users(self, entity):
         users = await self.client.get_participants(entity)
