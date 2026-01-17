@@ -38,8 +38,8 @@ def get_container_client():
     if not azure_enabled():
         return None
 
-    account_url = os.environ["ACCOUNT_URL"]
-    container   = os.environ["CONTAINER"]
+    account_url = os.environ["AZURE_STORAGE_ACCOUNT"]
+    container   = os.environ["AZURE_STORAGE_ACCOUNT_BLOB"]
 
     credential = DefaultAzureCredential()
     service    = BlobServiceClient(account_url, credential=credential)
