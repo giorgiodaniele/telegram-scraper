@@ -5,6 +5,7 @@ import telethon
 import datetime
 import dotenv
 import pandas
+import azure_integration
 from   pathlib import Path
 
 dotenv.load_dotenv()
@@ -12,6 +13,12 @@ dotenv.load_dotenv()
 TELEGRAM_API_ID    = os.environ["TELEGRAM_API_ID"]
 TELEGRAM_API_HASH  = os.environ["TELEGRAM_API_HASH"]
 TELEGRAM_CHAT_NAME = os.environ["TELEGRAM_CHAT_NAME"]
+
+# Azure
+AZURE_ENABLED              = os.environ["AZURE_ENABLED"]
+AZURE_STORAGE_ACCOUNT      = os.environ["AZURE_STORAGE_ACCOUNT"]
+AZURE_STORAGE_ACCOUNT_BLOB = os.environ["AZURE_STORAGE_ACCOUNT_BLOB"]
+
 
 def parse_utc(value):
      if not value:
@@ -57,6 +64,12 @@ async def action(client: telethon.TelegramClient, target, chat_name):
      # ... and save on disk
      path = folder / f"{chat_name}_users.csv"
      data.to_csv(path, index=False)
+
+     if AZURE_ENABLED and AZURE_ENABLED == "true":
+          container = azure_integration.container(AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_ACCOUNT_BLOB)
+          azure_integration.upload_blob(container, path)
+
+     # TODO: integration with AWS
 
      return len(data)
 

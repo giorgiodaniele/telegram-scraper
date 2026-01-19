@@ -27,7 +27,7 @@ resource "azurerm_resource_group" "rg" {
 
 
 # Create a new storage account
-resource "azurerm_storage_account" "bucket_sa" {
+resource "azurerm_storage_account" "storage" {
      name                     = "st${local.application}${local.environment}${local.region_code}"
      resource_group_name      = azurerm_resource_group.rg.name
      location                 = azurerm_resource_group.rg.location
@@ -35,21 +35,15 @@ resource "azurerm_storage_account" "bucket_sa" {
      account_tier             = "Standard"
      account_replication_type = "LRS"        
           
-     # Locally  Redudant Storage - (LRS)  3 replicas within same AZes
-     # Zone     Redudant Storage - (ZRS)  3 replicas across different AZes
-     # Geo      Redudant Storage - (GRS)  3 replicas across different regions
-     # Geo-Zone Redudant Storage - (GZRS) 3 replicas across different regions and AZes
+     # LRS  - 3 synchronous replicas within a single datacenter
+     # ZRS  - 3 synchronous replicas across different availability zones
+     # GRS  - LRS in primary region + async replication to secondary region (6 total copies)
+     # GZRS - ZRS in primary region + async replication to secondary region
 }
 
 
-resource "azurerm_storage_container" "messages_bucket" {
-     name                  = "messages"
-     storage_account_name  = azurerm_storage_account.bucket_sa.name
-     container_access_type = "private"
-}
-
-resource "azurerm_storage_container" "users_bucket" {
-     name                  = "users"
-     storage_account_name  = azurerm_storage_account.bucket_sa.name
+resource "azurerm_storage_container" "main_container" {
+     name                  = "data"
+     storage_account_name  = azurerm_storage_account.storage.name
      container_access_type = "private"
 }
