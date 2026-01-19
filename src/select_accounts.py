@@ -21,7 +21,6 @@ async def action(
 ):
      
      records = []
-
      async for m in client.iter_messages(
           echat,
           offset_date=te if te else None,
@@ -37,18 +36,27 @@ async def action(
      data = pandas.DataFrame(
           [
                {
-                    "id"    : r.id,
-                    "date"  : r.date,
-                    "text"  : r.message,
-                    "sender": r.from_id.user_id,
+                    "id"        : r.id,
+                    "username"  : r.username,
+                    "first_name": r.first_name,
+                    "last_name" : r.last_name,
+                    "phone"     : r.phone,
+                    "bot"       : r.bot,
                }
-               for r in records if r.message
+               for r in records
           ],
-          columns=["id", "date", "text", "sender"],
+          columns=[
+               "id",
+               "username",
+               "first_name",
+               "last_name",
+               "phone",
+               "bot",
+          ],
      )
 
      # ... and save on disk
-     path  = ffold / f"{fname}_messages_{ts.date()}_{te.date()}.csv"
+     path  = ffold / f"{fname}_users_{ts.date()}_{te.date()}.csv"
      nrecs = len(data)
      data.to_csv(path, index=False)
 

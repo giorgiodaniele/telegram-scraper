@@ -3,7 +3,7 @@ from azure.identity     import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient
 
 
-def container(
+def get_container(
     azure_storage_account   : str,
     azure_storage_container : str,
 ):
@@ -20,13 +20,15 @@ def container(
      return service.get_container_client(azure_storage_container)
 
 
-def upload_blob(storage, path: Path) -> None:
+def push_container(container, path: Path) -> None:
 
-     if storage is None:
+     if container is None:
           return
+     
+     # Upload a BLOB within specified container
 
      with path.open("rb") as f:
-          storage.upload_blob(
+          container.upload_blob(
                name=path.name,
                data=f,
                overwrite=True,

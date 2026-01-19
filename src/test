@@ -1,2 +1,2 @@
-python select_messages.py
-python select_users.py
+# python main.py --chat-name "Polito Debate" --action select-messages --ts 2026-01-01 --te 2026-01-02
+# python main.py --chat-name "Polito Debate" --action delete-messages --ts 2025-12-01 --te 2025-12-31
